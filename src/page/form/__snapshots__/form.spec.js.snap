@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form test suite renders correctly 1`] = `
+<DocumentFragment>
+  <form
+    class="form"
+  >
+    <div
+      class="form__line"
+    >
+      <label
+        class="form__label"
+        for="githubAccount"
+      />
+      <div
+        class="form__input-container"
+      >
+        <input
+          id="githubAccount"
+          name="githubAccount"
+          value="test"
+        />
+        <span
+          class="form__error-message"
+        >
+          erreur de saisie
+        </span>
+      </div>
+    </div>
+    <div
+      class="form__line form__line--alone"
+    >
+      <button
+        class="btn btn--search"
+        data-testid="button"
+      >
+        Rechercher
+      </button>
+    </div>
+  </form>
+  <div
+    class="user-list"
+    data-testid="userlist"
+    style="display: none;"
+  />
+  <div>
+    Loading...
+  </div>
+</DocumentFragment>
+`;

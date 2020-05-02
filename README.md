@@ -1,2 +1,0 @@
-# componentsTesting
-Created with CodeSandbox
