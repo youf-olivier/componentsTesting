@@ -1,24 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Message test suite renders correctly 1`] = `
-<DocumentFragment>
-  <div
-    class="error-message"
-  >
-    <span
-      data-testid="mainMessage"
-    >
-      Une erreur est survenue
-    </span>
-    <button
-      class="error-message__close"
-    >
-      X
-    </button>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Message test suite renders correctly and contains message 1`] = `
 <DocumentFragment>
   <div

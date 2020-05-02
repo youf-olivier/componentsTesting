@@ -1,16 +1,14 @@
 import React from "react";
-import { render, waitForDomChange, fireEvent } from "@testing-library/react";
+import { render, waitForDomChange, fireEvent, waitFor } from "@testing-library/react";
 
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-import FormContainer from "./form.container";
-import { MessageContext } from "commons/messages";
+import FormContainer from "../form.container";
+import { MessageContext } from "shared/components/messages";
 
 const getWrapper = (message, displayMessage) => ({ children }) => (
-  <MessageContext.Provider value={{ message, displayMessage }}>
-    {children}
-  </MessageContext.Provider>
+  <MessageContext.Provider value={{ message, displayMessage }}>{children}</MessageContext.Provider>
 );
 
 const listUsers = [
@@ -18,20 +16,20 @@ const listUsers = [
     id: "01",
     html_url: "http://urluser1",
     avatar_url: "http://urlimageuser1",
-    login: "johnpapa"
+    login: "johnpapa",
   },
   {
     id: "02",
     html_url: "http://urluser2",
     avatar_url: "http://urlimageuser2",
-    login: "gaearon"
+    login: "gaearon",
   },
   {
     id: "03",
     html_url: "http://urluser3",
     avatar_url: "http://urlimageuser3",
-    login: "kentcdodds"
-  }
+    login: "kentcdodds",
+  },
 ];
 
 const singleUser = [
@@ -39,18 +37,15 @@ const singleUser = [
     id: "42",
     html_url: "http://urluser42",
     avatar_url: "http://urlimageuser42",
-    login: "oyouf"
-  }
+    login: "oyouf",
+  },
 ];
 
-// About Warning : https://github.com/facebook/react/pull/14853
 describe("Form container tests suite", () => {
   const mock = new MockAdapter(axios);
   beforeEach(() => {
     mock
-      .onGet(
-        "https://api.github.com/search/users?q=followers:%3E40000&order=desc&sort=followers"
-      )
+      .onGet("https://api.github.com/search/users?q=followers:%3E40000&order=desc&sort=followers")
       .reply(200, { items: listUsers });
     mock
       .onGet("https://api.github.com/search/users?q=user:oyouf")
@@ -59,7 +54,7 @@ describe("Form container tests suite", () => {
 
   it("should return correct render before request return", async () => {
     const { findAllByTestId } = render(<FormContainer />, {
-      wrapper: getWrapper("", () => {})
+      wrapper: getWrapper("", () => {}),
     });
     const userCards = await findAllByTestId("usercard");
     expect(userCards.length).toBe(3); //or not to be
@@ -69,7 +64,7 @@ describe("Form container tests suite", () => {
     let rendering;
 
     rendering = render(<FormContainer />, {
-      wrapper: getWrapper("", () => {})
+      wrapper: getWrapper("", () => {}),
     });
 
     //First Load
@@ -93,7 +88,7 @@ describe("Form container tests suite", () => {
     let rendering;
 
     rendering = render(<FormContainer />, {
-      wrapper: getWrapper("", () => {})
+      wrapper: getWrapper("", () => {}),
     });
 
     //First Load

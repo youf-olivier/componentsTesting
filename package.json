@@ -4,6 +4,12 @@
   "description": "",
   "keywords": [],
   "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "5.5.0",
     "@testing-library/react": "10.0.4",
@@ -17,15 +23,26 @@
   },
   "devDependencies": {
     "jest-dom": "^3.1.3",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "react-hooks-testing-library": "0.4.1",
     "react-testing-library": "6.1.2",
     "typescript": "3.4.3"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/",
+      "!**/index.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
   },
   "browserslist": [
     ">0.2%",

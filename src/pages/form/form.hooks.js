@@ -1,13 +1,13 @@
 import { useCallback, useState, useEffect, useContext } from "react";
-import { MessageContext } from "commons/messages";
+import { MessageContext } from "shared/components/messages";
 
 const getInitialState = validatorInternal => ({
   githubAccount: {
     id: "githubAccount",
     label: "Compte Github",
     value: "",
-    message: validatorInternal.githubAccount("")
-  }
+    message: validatorInternal.githubAccount(""),
+  },
 });
 
 export const computeErrors = state =>
@@ -27,8 +27,8 @@ export const onChangeCB = (validatorInternal, setInputs) => e => {
     [name]: {
       ...prevInput[name],
       value,
-      message
-    }
+      message,
+    },
   }));
 };
 
@@ -64,18 +64,9 @@ export const useForm = ({ validator, fetchUser }) => {
     fetchUser(query).then(users => setUsers(users.items));
   }, [query, fetchUser]);
 
-  const onChange = useCallback(onChangeCB(validator, setInputs), [
-    inputs,
-    setInputs
-  ]);
+  const onChange = useCallback(onChangeCB(validator, setInputs), [inputs, setInputs]);
   const onSubmit = useCallback(
-    onSubmitCB(
-      inputs.githubAccount.value,
-      errors,
-      displayMessage,
-      setHasSubmitOnce,
-      setQuery
-    ),
+    onSubmitCB(inputs.githubAccount.value, errors, displayMessage, setHasSubmitOnce, setQuery),
     [inputs.githubAccount.value, errors, displayMessage, setHasSubmitOnce]
   );
 

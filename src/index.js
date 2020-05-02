@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 
 import "./styles.scss";
 import Header from "./layout/header";
-import Form from "./page/form";
-import Message, { MessageProvider } from "commons/messages";
+import Form from "./pages/form";
+import Message, { MessageProvider } from "shared/components/messages";
 
 function App() {
   return (
