@@ -1,0 +1,11 @@
+logs
+*.log
+coverage
+node_modules/
+.npm
+/node_modules
+/coverage
+dist
+.cache
+.npmrc
+.vscode/

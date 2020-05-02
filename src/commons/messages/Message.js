@@ -4,7 +4,7 @@ import "./Message.scss";
 
 export const Message = ({ message, onClose }) => (
   <div className="error-message">
-    <span>{message}</span>
+    <span data-testid="mainMessage">{message}</span>
     <button className="error-message__close" onClick={onClose}>
       X
     </button>
