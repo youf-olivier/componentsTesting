@@ -1,3 +1,3 @@
 export { default } from "./Message.container";
 
-export { default as MessageProvider, MessageContext } from "./MessageContext";
+export { default as MessageProvider, MessageContext } from "./Message.provider";

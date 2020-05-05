@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import { MessageContext } from "./MessageContext";
-import MessageContainer from "./Message.container";
+import { MessageContext } from "../Message.provider";
+import MessageContainer from "../Message.container";
 
 const getWrapper = (message = "", displayMessage = () => {}) => ({ children }) => (
   <MessageContext.Provider value={{ message, displayMessage }}>{children}</MessageContext.Provider>

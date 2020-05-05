@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Component from "./Message";
+import Component from "../Message";
 
 describe("Message test suite", () => {
   const message = "Une erreur est survenue";

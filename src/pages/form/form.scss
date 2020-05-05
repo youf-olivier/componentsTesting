@@ -1,30 +1,44 @@
-.form{
+.form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   margin: auto;
-  &__input-container{
+  &__input-container {
     display: flex;
     flex-direction: column;
   }
-  &__line{
+  &__line {
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: .1em;
+    padding: 0.1em;
   }
-  &__label{
+  &__separator {
+    font-size: 0.8em;
+    margin: 1em 0;
+    &::before,
+    &::after {
+      content: '';
+      border-bottom: solid 1px #aaaaaa;
+      width: 3em;
+      position: relative;
+      bottom: 0.5em;
+      margin-right: 1em;
+      margin-left: 1em;
+    }
+  }
+  &__label {
     text-align: left;
     color: #444;
-    font-size: .8em;
+    font-size: 0.8em;
     margin-right: 2em;
   }
-  &__error-message{
-    color:red;
-    font-size: .7em;
+  &__error-message {
+    color: red;
+    font-size: 0.7em;
   }
 }
-.btn--search{
+.btn--search {
   text-align: center;
   width: 16em;
   margin: 1em auto;

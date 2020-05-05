@@ -1,9 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Form test suite renders correctly 1`] = `
+exports[`Form test suite Should render all components correctly 1`] = `
 <DocumentFragment>
   <form
     class="form"
+    role="search"
   >
     <div
       class="form__line"
@@ -11,20 +12,47 @@ exports[`Form test suite renders correctly 1`] = `
       <label
         class="form__label"
         for="githubAccount"
-      />
+      >
+        Compte github
+      </label>
       <div
         class="form__input-container"
       >
         <input
+          aria-errormessage="githubAccountAlert"
           id="githubAccount"
           name="githubAccount"
+          type="text"
           value="test"
         />
-        <span
-          class="form__error-message"
-        >
-          erreur de saisie
-        </span>
+      </div>
+    </div>
+    <div
+      class="form__line form__separator"
+    >
+      <span>
+        Ou
+      </span>
+    </div>
+    <div
+      class="form__line"
+    >
+      <label
+        class="form__label"
+        for="username"
+      >
+        Nom d'utilisateur
+      </label>
+      <div
+        class="form__input-container"
+      >
+        <input
+          aria-errormessage="errorUsername"
+          id="username"
+          name="username"
+          type="text"
+          value="Jean"
+        />
       </div>
     </div>
     <div
@@ -32,19 +60,163 @@ exports[`Form test suite renders correctly 1`] = `
     >
       <button
         class="btn btn--search"
-        data-testid="button"
+        type="button"
       >
         Rechercher
       </button>
     </div>
   </form>
   <div
+    aria-label="userlist"
     class="user-list"
-    data-testid="userlist"
+    role="list"
     style="display: none;"
   />
-  <div>
+  <div
+    aria-busy="true"
+    aria-label="loader"
+    role="alert"
+  >
     Loading...
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Form test suite Should render all components correctly 2`] = `
+<DocumentFragment>
+  <form
+    class="form"
+    role="search"
+  >
+    <div
+      class="form__line"
+    >
+      <label
+        class="form__label"
+        for="githubAccount"
+      >
+        Compte github
+      </label>
+      <div
+        class="form__input-container"
+      >
+        <input
+          aria-errormessage="githubAccountAlert"
+          id="githubAccount"
+          name="githubAccount"
+          type="text"
+          value="test"
+        />
+      </div>
+    </div>
+    <div
+      class="form__line form__separator"
+    >
+      <span>
+        Ou
+      </span>
+    </div>
+    <div
+      class="form__line"
+    >
+      <label
+        class="form__label"
+        for="username"
+      >
+        Nom d'utilisateur
+      </label>
+      <div
+        class="form__input-container"
+      >
+        <input
+          aria-errormessage="errorUsername"
+          id="username"
+          name="username"
+          type="text"
+          value="Jean"
+        />
+      </div>
+    </div>
+    <div
+      class="form__line form__line--alone"
+    >
+      <button
+        class="btn btn--search"
+        type="button"
+      >
+        Rechercher
+      </button>
+    </div>
+  </form>
+  <div
+    aria-label="userlist"
+    class="user-list"
+    role="list"
+    style=""
+  >
+    <div
+      aria-label="usercard"
+      class="user-card"
+      role="listitem"
+    >
+      <a
+        class="user-card__link"
+        href="http://comptegithub.com"
+      >
+        <img
+          alt="login1"
+          class="user-card__avatar"
+          src="http://avatar1.jpg"
+        />
+        <span
+          class="user-card__login"
+        >
+          login1
+        </span>
+      </a>
+    </div>
+    <div
+      aria-label="usercard"
+      class="user-card"
+      role="listitem"
+    >
+      <a
+        class="user-card__link"
+        href="http://comptegithub.com"
+      >
+        <img
+          alt="login2"
+          class="user-card__avatar"
+          src="http://avatar2.jpg"
+        />
+        <span
+          class="user-card__login"
+        >
+          login2
+        </span>
+      </a>
+    </div>
+    <div
+      aria-label="usercard"
+      class="user-card"
+      role="listitem"
+    >
+      <a
+        class="user-card__link"
+        href="http://comptegithub.com"
+      >
+        <img
+          alt="login3"
+          class="user-card__avatar"
+          src="http://avatar3.jpg"
+        />
+        <span
+          class="user-card__login"
+        >
+          login3
+        </span>
+      </a>
+    </div>
   </div>
 </DocumentFragment>
 `;

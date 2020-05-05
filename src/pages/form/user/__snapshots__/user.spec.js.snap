@@ -3,8 +3,9 @@
 exports[`User card test suite renders correctly 1`] = `
 <DocumentFragment>
   <div
+    aria-label="usercard"
     class="user-card"
-    data-testid="usercard"
+    role="listitem"
   >
     <a
       class="user-card__link"

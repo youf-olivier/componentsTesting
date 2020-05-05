@@ -1,74 +1,108 @@
-import { useCallback, useState, useEffect, useContext } from "react";
-import { MessageContext } from "shared/components/messages";
+import { useCallback, useState, useEffect, useContext } from 'react';
+import { MessageContext } from 'shared/components/messages';
+import { computeErrors } from './form.pure';
 
-const getInitialState = validatorInternal => ({
+const getInitialState = (validatorInternal, isAllEmpty) => ({
   githubAccount: {
-    id: "githubAccount",
-    label: "Compte Github",
-    value: "",
-    message: validatorInternal.githubAccount(""),
+    id: 'githubAccount',
+    label: 'Compte Github',
+    value: '',
+    message: validatorInternal.githubAccount('', isAllEmpty),
+  },
+  userName: {
+    id: 'userName',
+    label: "Nom d'utilisateur",
+    value: '',
+    message: validatorInternal.userName('', isAllEmpty),
   },
 });
 
-export const computeErrors = state =>
-  Object.keys(state).reduce((acc, key) => {
-    const input = state[key];
-    if (input.message && input.message !== "") {
-      return [...acc, { label: input.label, id: input.id }];
-    }
-    return acc;
-  }, []);
-
-export const onChangeCB = (validatorInternal, setInputs) => e => {
-  const { name, value } = e.target;
-  const message = validatorInternal[name](value);
-  setInputs(prevInput => ({
-    ...prevInput,
-    [name]: {
-      ...prevInput[name],
-      value,
-      message,
-    },
-  }));
-};
-
-export const onSubmitCB = (
-  accountValue,
+export const onSubmitCB = ({
+  inputs: { githubAccount, userName },
   errors,
   displayMessage,
   setHasSubmitOnce,
-  setQuery
-) => e => {
+  setQuery,
+}) => e => {
   e.preventDefault();
   setHasSubmitOnce(true);
   if (errors.length > 0) {
-    displayMessage("Le formulaire contient des erreurs");
+    displayMessage('Le formulaire contient des erreurs');
   } else {
-    displayMessage("");
-    setQuery(accountValue);
+    displayMessage('');
+    setQuery({ githubAccount: githubAccount.value, userName: userName.value });
   }
 };
 
-export const useForm = ({ validator, fetchUser }) => {
-  const [inputs, setInputs] = useState(() => getInitialState(validator));
-  const [hasSubmitOnce, setHasSubmitOnce] = useState(false);
-  const [errors, setErrors] = useState("");
-  const [query, setQuery] = useState("");
-  const [users, setUsers] = useState([]);
-  const { displayMessage } = useContext(MessageContext);
+export const useInputs = validator => {
+  const [inputs, setInputs] = useState(() => getInitialState(validator, true));
+  const [errors, setErrors] = useState([]);
   useEffect(() => {
     setErrors(computeErrors(inputs));
   }, [inputs]);
+  const onChange = useCallback(
+    ({ name, value }) => {
+      setInputs(prevInputs => {
+        const inputsChanged = {
+          ...getInitialState(validator, false),
+          [name]: {
+            ...prevInputs[name],
+            value,
+          },
+        };
+        const allEmpty = Object.keys(inputsChanged).reduce(
+          (acc, curr) => acc && inputsChanged[curr].value === '',
+          true,
+        );
 
-  useEffect(() => {
-    fetchUser(query).then(users => setUsers(users.items));
-  }, [query, fetchUser]);
+        const inputsWithMessages = Object.keys(inputsChanged).reduce(
+          (result, key) => ({
+            ...result,
+            [key]: {
+              ...inputsChanged[key],
+              message: validator[key](value, allEmpty),
+            },
+          }),
+          {},
+        );
 
-  const onChange = useCallback(onChangeCB(validator, setInputs), [inputs, setInputs]);
-  const onSubmit = useCallback(
-    onSubmitCB(inputs.githubAccount.value, errors, displayMessage, setHasSubmitOnce, setQuery),
-    [inputs.githubAccount.value, errors, displayMessage, setHasSubmitOnce]
+        return inputsWithMessages;
+      });
+    },
+    [validator],
   );
+
+  return { inputs, onChange, errors };
+};
+
+export const useFetchUser = (fetchUser, fetchUserByName) => {
+  const [users, setUsers] = useState([]);
+  const [query, setQuery] = useState({ githubAccount: '', userName: '' });
+  useEffect(() => {
+    if (query.userName) {
+      fetchUserByName(query.userName).then(response => setUsers(response.items));
+    } else {
+      fetchUser(query.githubAccount).then(response => setUsers(response.items));
+    }
+  }, [query, fetchUser, fetchUserByName]);
+  return { setQuery, users };
+};
+
+export const useForm = ({ validator, fetchUser, fetchUserByName }) => {
+  const [hasSubmitOnce, setHasSubmitOnce] = useState(false);
+  const { displayMessage } = useContext(MessageContext);
+  const { inputs, onChange: onChangeCb, errors } = useInputs(validator);
+  const { setQuery, users } = useFetchUser(fetchUser, fetchUserByName);
+  const onSubmit = useCallback(
+    e => {
+      onSubmitCB({ inputs, errors, displayMessage, setHasSubmitOnce, setQuery })(e);
+    },
+    [inputs, errors, displayMessage, setQuery],
+  );
+
+  const onChange = ({ target }) => {
+    onChangeCb(target);
+  };
 
   return { onChange, inputs, onSubmit, hasSubmitOnce, users };
 };
