@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Component from './user';
+import User from './User';
 
 describe('User card test suite', () => {
   const user = {
@@ -10,7 +10,7 @@ describe('User card test suite', () => {
   };
 
   it('renders correctly', () => {
-    const { asFragment } = render(<Component user={user} />);
+    const { asFragment } = render(<User user={user} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

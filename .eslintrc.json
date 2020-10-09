@@ -15,7 +15,42 @@
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    "arrow-parens": ["error", "as-needed"]
+    "react/display-name": 0,
+    "react/jsx-quotes": 0,
+    "jsx-quotes": [2, "prefer-double"],
+    "arrow-parens": ["error", "as-needed"],
+    "import/no-named-as-default": 0,
+    "no-return-assign": 2,
+    "jsx-a11y/no-autofocus": 2,
+    "react/jsx-no-undef": 2,
+    "react/jsx-sort-props": 0,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 0,
+    "react/no-unknown-property": 2,
+    "react/prop-types": 2,
+    "react/react-in-jsx-scope": 2,
+    "react/self-closing-comp": 2,
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [".jsx", ".js"]
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["**/*.stories.js", "**/*.spec.js", "**/stories/**"]
+      }
+    ],
+    "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION__"] }],
+    "linebreak-style": 0,
+    "implicit-arrow-linebreak": 0,
+    "function-paren-newline": 0,
+    "import/prefer-default-export": 0
   },
   "settings": {
     "import/resolver": {

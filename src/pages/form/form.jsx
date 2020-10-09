@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
 import PropTypes, { shape } from 'prop-types';
 import './form.scss';
-import { userType } from './user/user';
+import { UserListType } from './userlist';
 
-const User = React.lazy(() => import('./user'));
+const Userlist = React.lazy(() => import('./userlist'));
 
 export const inputFormType = PropTypes.shape({
   message: PropTypes.string,
@@ -16,7 +16,7 @@ const propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   hasSubmitOnce: PropTypes.bool.isRequired,
-  users: PropTypes.arrayOf(PropTypes.shape({ ...userType, id: PropTypes.string })).isRequired,
+  users: UserListType.isRequired,
   inputs: shape({
     githubAccount: inputFormType,
     userName: inputFormType,
@@ -84,11 +84,7 @@ const Form = ({ onChange, inputs, onClick, hasSubmitOnce, users }) => (
           </div>
         }
       >
-        <div className="user-list" aria-label="userlist" role="list">
-          {users.map(({ id, ...user }) => (
-            <User user={user} key={id} />
-          ))}
-        </div>
+        <Userlist users={users} />
       </Suspense>
     )}
   </>

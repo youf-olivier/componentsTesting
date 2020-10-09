@@ -42,6 +42,8 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/path/to/dir/",
+      "!src/**/*.constants.js",
+      "!src/**/storybook.js",
       "!**/index.js"
     ],
     "coverageThreshold": {
@@ -51,7 +53,8 @@
         "lines": 90,
         "statements": 90
       }
-    }
+    },
+    "clearMocks": true
   },
   "browserslist": [
     ">0.2%",
