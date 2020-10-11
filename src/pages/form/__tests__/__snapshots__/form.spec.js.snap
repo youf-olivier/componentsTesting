@@ -67,95 +67,12 @@ exports[`Form test suite Should render all components correctly 1`] = `
     </div>
   </form>
   <div
-    aria-label="userlist"
+    aria-label="liste comptes"
     class="user-list"
     role="list"
-    style="display: none;"
-  />
-  <div
-    aria-busy="true"
-    aria-label="loader"
-    role="alert"
-  >
-    Loading...
-  </div>
-</DocumentFragment>
-`;
-
-exports[`Form test suite Should render all components correctly 2`] = `
-<DocumentFragment>
-  <form
-    class="form"
-    role="search"
   >
     <div
-      class="form__line"
-    >
-      <label
-        class="form__label"
-        for="githubAccount"
-      >
-        Compte github
-      </label>
-      <div
-        class="form__input-container"
-      >
-        <input
-          aria-errormessage="githubAccountAlert"
-          id="githubAccount"
-          name="githubAccount"
-          type="text"
-          value="test"
-        />
-      </div>
-    </div>
-    <div
-      class="form__line form__separator"
-    >
-      <span>
-        Ou
-      </span>
-    </div>
-    <div
-      class="form__line"
-    >
-      <label
-        class="form__label"
-        for="username"
-      >
-        Nom d'utilisateur
-      </label>
-      <div
-        class="form__input-container"
-      >
-        <input
-          aria-errormessage="errorUsername"
-          id="username"
-          name="username"
-          type="text"
-          value="Jean"
-        />
-      </div>
-    </div>
-    <div
-      class="form__line form__line--alone"
-    >
-      <button
-        class="btn btn--search"
-        type="button"
-      >
-        Rechercher
-      </button>
-    </div>
-  </form>
-  <div
-    aria-label="userlist"
-    class="user-list"
-    role="list"
-    style=""
-  >
-    <div
-      aria-label="usercard"
+      aria-label="carte utilisateur"
       class="user-card"
       role="listitem"
     >
@@ -176,7 +93,7 @@ exports[`Form test suite Should render all components correctly 2`] = `
       </a>
     </div>
     <div
-      aria-label="usercard"
+      aria-label="carte utilisateur"
       class="user-card"
       role="listitem"
     >
@@ -197,7 +114,7 @@ exports[`Form test suite Should render all components correctly 2`] = `
       </a>
     </div>
     <div
-      aria-label="usercard"
+      aria-label="carte utilisateur"
       class="user-card"
       role="listitem"
     >

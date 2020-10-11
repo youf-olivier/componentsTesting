@@ -1,18 +1,25 @@
 import React from 'react';
-import FormComponent from './form';
+import Form from './form';
 import { useForm } from './form.hooks';
 import validator from './form.validation';
 import { fetchUser, fetchUserByName } from './form.services';
 
 const FormContainer = () => {
-  const { onChange, inputs, onSubmit, hasSubmitOnce, users } = useForm({
+  const { onChange, inputs, onSubmit, hasSubmitOnce, users, isLoading } = useForm({
     validator,
     fetchUser,
     fetchUserByName,
   });
 
   return (
-    <FormComponent onChange={onChange} inputs={inputs} onClick={onSubmit} hasSubmitOnce={hasSubmitOnce} users={users} />
+    <Form
+      onChange={onChange}
+      inputs={inputs}
+      onClick={onSubmit}
+      hasSubmitOnce={hasSubmitOnce}
+      users={users}
+      isLoading={isLoading}
+    />
   );
 };
 

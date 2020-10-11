@@ -1,9 +1,7 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import PropTypes, { shape } from 'prop-types';
 import './form.scss';
-import { UserListType } from './userlist';
-
-const Userlist = React.lazy(() => import('./userlist'));
+import Userlist, { UserListType } from './userlist';
 
 export const inputFormType = PropTypes.shape({
   message: PropTypes.string,
@@ -21,9 +19,10 @@ const propTypes = {
     githubAccount: inputFormType,
     userName: inputFormType,
   }).isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
-const Form = ({ onChange, inputs, onClick, hasSubmitOnce, users }) => (
+const Form = ({ onChange, inputs, onClick, hasSubmitOnce, users, isLoading }) => (
   <>
     <form className="form" role="search">
       <div className="form__line">
@@ -76,16 +75,12 @@ const Form = ({ onChange, inputs, onClick, hasSubmitOnce, users }) => (
         </button>
       </div>
     </form>
-    {users && users.length > 0 && (
-      <Suspense
-        fallback={
-          <div role="alert" aria-busy="true" aria-label="loader">
-            Loading...
-          </div>
-        }
-      >
-        <Userlist users={users} />
-      </Suspense>
+    {isLoading ? (
+      <div role="alert" aria-busy="true" aria-label="loader">
+        Loading...
+      </div>
+    ) : (
+      <Userlist users={users} />
     )}
   </>
 );

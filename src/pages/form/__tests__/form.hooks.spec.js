@@ -92,12 +92,14 @@ describe('Form Hooks tests suite', () => {
 
       // State before useEffect
       expect(result.current.users).toEqual([]);
+      expect(result.current.isLoading).toBeTruthy();
 
       // Awaiting the first useEffect
       await waitForNextUpdate();
 
       // State after the useEffect
       expect(result.current.users).toEqual(['user 1', 'user 2']);
+      expect(result.current.isLoading).toBeFalsy();
       expect(fetchUser).toBeCalledWith('');
     });
 

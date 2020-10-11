@@ -77,22 +77,28 @@ export const useInputs = validator => {
 
 export const useFetchUser = (fetchUser, fetchUserByName) => {
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState({ githubAccount: '', userName: '' });
+  const saveUsers = useCallback(usersList => {
+    setUsers(usersList);
+    setIsLoading(false);
+  }, []);
   useEffect(() => {
+    setIsLoading(true);
     if (query.userName) {
-      fetchUserByName(query.userName).then(response => setUsers(response.items));
+      fetchUserByName(query.userName).then(response => saveUsers(response.items));
     } else {
-      fetchUser(query.githubAccount).then(response => setUsers(response.items));
+      fetchUser(query.githubAccount).then(response => saveUsers(response.items));
     }
-  }, [query, fetchUser, fetchUserByName]);
-  return { setQuery, users };
+  }, [query, fetchUser, fetchUserByName, saveUsers]);
+  return { setQuery, users, isLoading };
 };
 
 export const useForm = ({ validator, fetchUser, fetchUserByName }) => {
   const [hasSubmitOnce, setHasSubmitOnce] = useState(false);
   const { displayMessage } = useContext(MessageContext);
   const { inputs, onChange: onChangeCb, errors } = useInputs(validator);
-  const { setQuery, users } = useFetchUser(fetchUser, fetchUserByName);
+  const { setQuery, users, isLoading } = useFetchUser(fetchUser, fetchUserByName);
   const onSubmit = useCallback(
     e => {
       onSubmitCB({ inputs, errors, displayMessage, setHasSubmitOnce, setQuery })(e);
@@ -104,5 +110,5 @@ export const useForm = ({ validator, fetchUser, fetchUserByName }) => {
     onChangeCb(target);
   };
 
-  return { onChange, inputs, onSubmit, hasSubmitOnce, users };
+  return { onChange, inputs, onSubmit, hasSubmitOnce, users, isLoading };
 };

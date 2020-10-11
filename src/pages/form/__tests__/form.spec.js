@@ -1,23 +1,23 @@
 import React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Component from '../form';
 
 describe('Form test suite', () => {
   const users = [
     {
-      id: '1',
+      id: 1,
       login: 'login1',
       avatar_url: 'http://avatar1.jpg',
       html_url: 'http://comptegithub.com',
     },
     {
-      id: '2',
+      id: 2,
       login: 'login2',
       avatar_url: 'http://avatar2.jpg',
       html_url: 'http://comptegithub.com',
     },
     {
-      id: '3',
+      id: 3,
       login: 'login3',
       avatar_url: 'http://avatar3.jpg',
       html_url: 'http://comptegithub.com',
@@ -40,23 +40,43 @@ describe('Form test suite', () => {
   };
   it('Should render all components correctly', async () => {
     const { asFragment } = render(
-      <Component users={users} inputs={inputs} onChange={() => {}} onClick={() => {}} hasSubmitOnce={false} />,
+      <Component
+        users={users}
+        inputs={inputs}
+        onChange={() => {}}
+        onClick={() => {}}
+        hasSubmitOnce={false}
+        isLoading={false}
+      />,
     );
     expect(asFragment()).toMatchSnapshot();
-    expect(screen.getByRole('textbox', { name: /Compte github/ })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: /Nom d'utilisateur/ })).toBeInTheDocument();
-    // Loading should be shown
-    expect(screen.getByRole('alert', { name: /loader/ })).toBeInTheDocument();
-
-    // We waiting about userList
-    const list = await waitFor(() => screen.getByRole(/list/, { name: 'userlist' }));
+    screen.getByRole('textbox', { name: /Compte github/ });
+    screen.getByRole('textbox', { name: /Nom d'utilisateur/ });
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
-    expect(asFragment()).toMatchSnapshot();
-    expect(list).toBeInTheDocument();
+    screen.getByRole(/list/, { name: 'liste comptes' });
+  });
+
+  it('should render loading message when loading', () => {
+    render(
+      <Component users={[]} inputs={inputs} onChange={() => {}} onClick={() => {}} hasSubmitOnce={false} isLoading />,
+    );
+    screen.getByRole('textbox', { name: /Compte github/ });
+    screen.getByRole('textbox', { name: /Nom d'utilisateur/ });
+    screen.getByRole('alert');
+    expect(screen.queryByRole(/list/, { name: 'liste comptes' })).not.toBeInTheDocument();
   });
 
   it('should shows messages when form has submitted once', () => {
-    render(<Component users={users} inputs={inputs} onChange={() => {}} onClick={() => {}} hasSubmitOnce />);
+    render(
+      <Component
+        users={users}
+        inputs={inputs}
+        onChange={() => {}}
+        onClick={() => {}}
+        hasSubmitOnce
+        isLoading={false}
+      />,
+    );
     expect(screen.getByRole('alert', { name: /githubAccountAlert/ })).toBeInTheDocument();
     expect(screen.getByRole('alert', { name: /errorUsername/ })).toBeInTheDocument();
   });

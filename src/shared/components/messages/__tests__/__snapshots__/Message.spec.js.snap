@@ -4,6 +4,7 @@ exports[`Message test suite renders correctly and contains message 1`] = `
 <DocumentFragment>
   <div
     class="error-message"
+    role="alert"
   >
     <span
       data-testid="mainMessage"
@@ -12,6 +13,7 @@ exports[`Message test suite renders correctly and contains message 1`] = `
     </span>
     <button
       class="error-message__close"
+      type="button"
     >
       X
     </button>

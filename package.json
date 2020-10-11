@@ -12,6 +12,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@testing-library/user-event": "^12.1.7",
     "axios": "0.20.0",
     "mw.validation": "1.0.15",
     "prop-types": "^15.7.2",

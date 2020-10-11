@@ -1,6 +1,7 @@
-import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
-import MessageProvider, { MessageContext } from "../Message.provider";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import UserEvent from '@testing-library/user-event';
+import MessageProvider, { MessageContext } from '../Message.provider';
 
 const TestingApp = () => {
   const { message, displayMessage } = React.useContext(MessageContext);
@@ -9,7 +10,7 @@ const TestingApp = () => {
       <span data-testid="message">{message}</span>
       <button
         onClick={() => {
-          displayMessage("message displayed");
+          displayMessage('message displayed');
         }}
         type="button"
       >
@@ -21,17 +22,17 @@ const TestingApp = () => {
 
 const wrapper = ({ children }) => <MessageProvider>{children}</MessageProvider>;
 
-describe("Message provider tests suite", () => {
-  it("should be initialized with empty message", () => {
+describe('Message provider tests suite', () => {
+  it('should be initialized with empty message', () => {
     render(<TestingApp />, { wrapper });
-    expect(screen.getByTestId("message")).toHaveTextContent("");
+    expect(screen.getByTestId('message')).toHaveTextContent('');
   });
 
-  it("should be changed when call displayMessage", async () => {
+  it('should be changed when call displayMessage', async () => {
     render(<TestingApp />, { wrapper });
     const button = screen.getByText(/Display error/);
-    expect(screen.getByTestId("message")).toHaveTextContent("");
-    await fireEvent.click(button);
-    expect(screen.getByTestId("message")).toHaveTextContent("message displayed");
+    expect(screen.getByTestId('message')).toHaveTextContent('');
+    await UserEvent.click(button);
+    expect(screen.getByTestId('message')).toHaveTextContent('message displayed');
   });
 });

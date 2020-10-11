@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Userlist tests suite should render the list with user list full 1`] = `
+<DocumentFragment>
+  <div
+    aria-label="liste comptes"
+    class="user-list"
+    role="list"
+  >
+    <div
+      aria-label="carte utilisateur"
+      class="user-card"
+      role="listitem"
+    >
+      <a
+        class="user-card__link"
+        href="http://comptegithub.com/login1"
+      >
+        <img
+          alt="login1"
+          class="user-card__avatar"
+          src="http://avatar1.jpg"
+        />
+        <span
+          class="user-card__login"
+        >
+          login1
+        </span>
+      </a>
+    </div>
+    <div
+      aria-label="carte utilisateur"
+      class="user-card"
+      role="listitem"
+    >
+      <a
+        class="user-card__link"
+        href="http://comptegithub.com/login2"
+      >
+        <img
+          alt="login2"
+          class="user-card__avatar"
+          src="http://avatar2.jpg"
+        />
+        <span
+          class="user-card__login"
+        >
+          login2
+        </span>
+      </a>
+    </div>
+    <div
+      aria-label="carte utilisateur"
+      class="user-card"
+      role="listitem"
+    >
+      <a
+        class="user-card__link"
+        href="http://comptegithub.com/login3"
+      >
+        <img
+          alt="login3"
+          class="user-card__avatar"
+          src="http://avatar3.jpg"
+        />
+        <span
+          class="user-card__login"
+        >
+          login3
+        </span>
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
