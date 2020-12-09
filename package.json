@@ -7,36 +7,35 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
-    "test-coverage": "react-scripts test --coverage --watchAll=false --env=jest-environment-jsdom-sixteen",
+    "test": "react-scripts test",
+    "test-coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@testing-library/user-event": "^12.1.7",
-    "axios": "0.20.0",
+    "@testing-library/user-event": "^12.5.0",
+    "axios": "0.21.0",
     "mw.validation": "1.0.15",
     "prop-types": "^15.7.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-scripts": "3.4.3",
-    "sass": "1.27.0"
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-scripts": "4.0.1",
+    "sass": "1.30.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "5.11.4",
-    "@testing-library/react": "11.0.4",
-    "@testing-library/react-hooks": "^3.4.2",
-    "axios-mock-adapter": "1.18.2",
-    "eslint": "^7.10.0",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^6.12.0",
+    "@testing-library/jest-dom": "5.11.6",
+    "@testing-library/react": "11.2.2",
+    "@testing-library/react-hooks": "^3.7.0",
+    "axios-mock-adapter": "1.19.0",
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.21.3",
-    "eslint-plugin-react-hooks": "^4.1.2",
-    "jest-environment-jsdom-sixteen": "^1.0.3",
-    "prettier": "^2.1.2",
-    "react-test-renderer": "^16.13.1"
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.2.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.1"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -55,7 +54,8 @@
         "statements": 90
       }
     },
-    "clearMocks": true
+    "clearMocks": true,
+    "resetMocks": false
   },
   "browserslist": [
     ">0.2%",
