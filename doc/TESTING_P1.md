@@ -1,25 +1,14 @@
 <h1>Tester ses composants React</h1>
 
-- [Analyse statique](#analyse-statique)
-  - [EsLint](#eslint)
-  - [Prettier](#prettier)
-  - [Plugins](#plugins)
-  - [Typescript](#typescript)
-- [Tests unitaires](#tests-unitaires)
-  - [Jest](#jest)
-- [Tests d'intégration](#tests-dintégration)
-  - [Le test d'intégration](#le-test-dintégration)
-  - [Installation](#installation)
-  - [Tester la vue](#tester-la-vue)
-  - [Tester strictement la vue : les requêtes](#tester-strictement-la-vue--les-requêtes)
-  - [Faciliter les assertions : Jest Dom](#faciliter-les-assertions--jest-dom)
-  - [Tester les interactions : User Event](#tester-les-interactions--user-event)
-  - [Tester les rendus asynchrones : waitFor](#tester-les-rendus-asynchrones--waitfor)
-- [Pour aller plus loin : Partie 2](#pour-aller-plus-loin--partie-2)
+Lecture conseillée : https://medium.com/just-tech-it-now/react-testing-library-ba339ea01f47
+
+<H2>Plan</H2>
+
+[TOC]
 
 Avoir un code qui marche c'est bien, mais être sûr de son bon fonctionnement et de sa pérennité c'est mieux. C'est ce qu'on appel la qualité. Et pour cela il existe un panel d'outils que nous allons voir ensemble.
 
-## Comment tester son application
+# Comment tester son application
 
 Un projet React est un ensemble complet et complexe de composants, de fonctions et de patterns en tous genres. Nous allons voir tout au long de ce chapitre les différents outils qui sont à notre disposition pour tester son application
 
@@ -34,7 +23,7 @@ Voyons cela ensemble, en remontant le trophée, nous avons :
 - **Les tests d'intégration :** ici nous cherchons a vérifier que les composants fonctionnent correctement entre eux.
 - **Les tests end to end :** ce test, bien plus couteux en temps, va tester l'application de bout en bout.
 
-Ici nous allons nous concentrer sur les trois premiers items.
+Durant cette série d'exercice nous allons nous concentrer sur les 3 premiers éléments. Les tests End to End pourront être vus à part.
 
 # Analyse statique
 
@@ -44,17 +33,17 @@ Avant de tester quoi que ce soit, nous pouvons déjà analyser statiquement son 
 
 <img src="./images/eslint.png" style="zoom:25%;" />
 
-Eslint est un linter, un utilitaire qui va analyser le code de manière statique pour y déceler tout un ensemble de problèmes à partir de règles prédéfinies. On peut choisir d'ajouter un linter pour le javascript mais également pour react.
+Eslint est un linter: un utilitaire qui va analyser le code de manière statique pour y déceler tout un ensemble de problèmes à partir de règles prédéfinies. On peut choisir d'ajouter un linter pour le javascript mais également pour React.
 
-De base il est présent dans les solutions générées par Create React App. Le cas échéant, rien de plus simple, il suffit de se laisser guider par le CLI :
+De base il est présent dans les solutions générées par *Create React App*. Le cas échéant, rien de plus simple, il suffit de se laisser guider par le CLI :
 
-```
+```bash
 npx eslint --init
 ```
 
 ensuite on peut le lancer localement,
 
-```
+```bash
 npx eslint .
 ```
 
@@ -67,11 +56,21 @@ ou, mieux, configurer un script dans le package.json
   },
 ```
 
-Afin d'éviter de scanner les node_modules ou tout autre fichier généré, nous indiquons que nous ne voulons scanner que ce qui sera envoyé sur le repo distant. Pour cela nous nous appuyons sur le fichier gitignore.
+Afin d'éviter de scanner les `node_modules` ou tout autre fichier généré, nous indiquons que nous ne voulons scanner que ce qui sera envoyé sur le repo distant. Pour cela nous nous appuyons sur le fichier gitignore.
 
 Vous pourrez ensuite à loisir modifier les règles, en importer des nouvelles (plugins) ou appliquer des templates (extends)
 
-🏋️‍♀️ Ajouter/Configurer/Lancer le linter
+❗️N'oubliez pas d'ajouter une configuration afin de scanner les bons fichiers
+
+```json
+"eslintConfig": {
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "overrides": [{"files": ["**/*.js?(x)"]}]
+}
+```
 
 ## Prettier 
 
@@ -83,7 +82,7 @@ Attention cependant, prettier et EsLint peuvent entrer en conflit, il faudra don
 
 Rien de plus simple ici aussi.
 
-```
+```bash
 npm install --save-dev prettier
 ```
 
@@ -99,7 +98,34 @@ Puis ensuite configurer la tache
 
 De la même manière nous ignorons les fichiers du gitignore pour ne se concentrer que sur les fichiers à pousser.
 
-🏋️‍♀️ Ajouter/Configurer/Lancer le linter
+Vous pouvez modifier les règles à travers le .**prettierrc.json**
+
+```json
+{
+  "singleQuote": true,
+  "semi": true,
+  "trailingComma": "all",
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid"
+}
+```
+
+Pensez également ensuite à installer eslint prettier : 
+
+```bash
+npm install --save-dev eslint-config-prettier
+```
+
+Et à l'ajouter en dernier dans les règles 
+
+```json
+{
+  "extends": [
+    "some-other-config-you-use",
+    "prettier"
+  ]
+}
+```
 
 ## Plugins
 
@@ -111,7 +137,7 @@ Afin de fluidifier leur utilisation, il existe des extensions sur la plupart des
 
 Avec TypeScript nous allons atteindre un niveau supplémentaire de validation statique. Avec la mise en place des typed, le code va pouvoir être vérifié au niveau de son exécution à l'aide de la validation de type.
 
-🏋️‍♀️ Pas d'exercice ici, le Typescript est un sujet à part entière.
+<img src="./images/jalon.jpg" style="zoom: 33%;" />
 
 # Tests unitaires
 
@@ -134,23 +160,99 @@ npm run test
 
 Les test vont être lancés en mode "watch", c'est à dire qu'il se relanceront automatique dès qu'une modification de fichier sera détectée.
 
-Pour écrire un test, il y a toujours les 3 parties que vous connaissez sans doutes déjà : **ARRANGE, ACT, ASSERT.**
+### Ecrire son premier test
 
-Les deux fonctions les plus communes a connaitre sont :
+Le test est écrit à l'intérieur d'une fonction contenu dans un bloc it (ou test) que l'on peut lui même intégrer dans un bloc descrime (ce qui peut aider à faire des regroupement logiques)
 
-- **jest.fn()** : qui va créer un mock (ARRANGE)
-- Lancer la fonction : ACT
-- **expect() :** qui servira à la vérification (ASSERT)
+```javascript
+describe("Mon jeu de tests", ()=>{
+  it("1+2 devrait retourner 3", ()=>{
+    // arrange and act
+    const result = 1+2;
+    // assert 
+    expect(result).toEqual(2);
+  })
+})
+```
 
-🏋️‍♀️ Ecrire un test avec Jest : Mock/Expect
+### Les matchers
+
+Pour écrire un test, il y a toujours les 3 parties que vous connaissez sans doutes déjà : **ARRANGE, ACT, ASSERT.** Avec expect, nous allons pouvoir accéder aux matchers pour mettre en place les assertions qui permettront de valider le test. Voici une liste des matchers les plus communs : 
+
+- **toEqual** : le plus commun des plus communs. On vérifie une égalité de valeur. Sur une object, il effectue une comparaison récursive.
+- **toBe** : vérifie une égalité au niveau de la référence. 
+- **toBeFalsy/toBeTruthy**
+- **toBeNull/toBeUndefined**
+
+En chainant le expect avec le not nous pouvons indiquer que nous voulons vérifier le résultat inverse. Par exemple :
+
+```javascript
+// true 
+expect(1+2).toEqual(3);
+// true
+expect(2+2).not.toEqual(3);
+```
+
+> **🏋️‍♀️ Ouvrez la solution et écrivez les tests du premier exercice du chapitre Jest**
+
+### Mocker les fonctions avec Jest
+
+Il arrive que nous ayons a tester des fonctions faisant appel à d'autre fonctions. Ces fonctions, injectées ou importées directement vont poser deux questions : 
+
+- Elles rendent la fonctions impure et peuvent rendre le test instable dans la durée (ajouter un math.Random et le test ne marche plus tout le temps)
+- On veut pouvoir vérifier que l'appel a été fait, ou non, dans de bonne conditions.
+
+Si la fonction est interne et qu'elle est pure, il n'est pas nécessaire de la tester à part ou de la mocker. Sauf si sa complexité et des tests séparés permettent une meilleure lisibilité, ce genre de fonction est testée au sein même de la fonction principale.
+
+Regardons cet exemple.
+
+```javascript
+const calcul = (a, b, fn) => {
+  const c = 10*a;
+  const d = 10*b;
+  return fn(c, d);
+}
+```
+
+Ici nous allons vérifier que la fonction fn est appelée avec les bon paramètre et qu'elle nous retourne le bon résultat.
+
+Pour cela nous allons remplacer la fonction existante cracher à :
+
+```javascript
+const fn = jest.fn((a, b)=>a + b);
+```
+
+Ici nous avons remplacé une fonction simple par une fonction mockée renvoyant une simple addition. 
+
+Une fois la fonction principale appelée, nous allons pouvoir faire nos vérifications. Pour cela nous allons pouvoir utiliser des matchers spécifiques. Voici les principaux.
+
+```javascript
+it("effectue un appel vers fn", () => {
+  // Arrange
+  const fn = jest.fn((a, b)=>a + b);
+  
+  // Act
+  const result = calcul(3, 5, fn);
+  
+  //Assert 
+  expect(result).toEqual(70);
+  
+  expect(fn).toHaveBeenCalled();
+  expect(fn).toHaveBeenCalledTimes(1);
+  expect(fn).toHaveBeenCalledWith(30, 50);
+  expect(fn).toHaveBeenNthCalledWith(1, 30, 50);
+})
+```
+
+> 🏋️‍♀️ **Ouvrez la solution et écrivez les tests du deuxième exercice du chapitre Jest**
+
+<img src="./images/jalon.jpg" style="zoom:33%;" />
 
 # Tests d'intégration
 
-Une fois les tests unitaires écris, nous allons pouvoir nous concentrer sur le test de nos composants. Pour cela nous allons utiliser [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/). Pour un soucis de temps, nous allons ici voir dans un premiers temps uniquement les bases.
+Tester une fonction pure qui retourne un résultat simple est facile à appréhender et maitriser. Cependant en React nous allons devoir aller un peu plus loin. En tant qu'interface utilisateur, devons pousser un peu plus loin le test le composant, et tester son comportement. Pour cela nous allons utiliser [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/). 
 
 ## Le test d'intégration
-
-Tout d'abord nous devons différencier le test d'intégration du test unitaire.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">The more your tests resemble the way your software is used, the more confidence they can give you.</p>&mdash; Kent C. Dodds 🚀 (@kentcdodds) <a href="https://twitter.com/kentcdodds/status/977018512689455106?ref_src=twsrc%5Etfw">March 23, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -244,7 +346,7 @@ Différence asFragment / container :
 - **Container** : Contient le DOM et est **mutable**
 - **AsFragment** : Renvoi un DocumentFragment qui est un objet minimal et **immutable**
 
-🏋️‍♀️ Effectuer son premier snapshot
+> **🏋️‍♀️ Basez vous sur les tests existants pour tester les vues simples et sans logique. ( RTL Exercice 1)**
 
 Ce qui est bien avec le JSX c’est que nous pouvons poser, au besoin des conditions, des mappers, des boucles etc.
 
@@ -284,7 +386,7 @@ screen.getByLabelText(/prénom/i);
 
 ```javascript
 // Récupération du message quand aucun utilisateur n'est affiché
-screen.getByText(/aucun utilisateur trouvé/i);
+screen.getByText(/aucun utilisateur trouvé/i));
 ```
 
 Mais également getByAltText, getByTitle, etc.
@@ -309,6 +411,14 @@ render(
 );
 screen.getByTestId("superspan");
 ```
+
+Pour vous aider il existe des outils : 
+
+https://testing-library.com/docs/guide-which-query/
+
+https://testing-playground.com/
+
+
 
 ## Faciliter les assertions : Jest Dom
 
@@ -337,11 +447,13 @@ Avec Jest Dom nous allons pouvoir faire des assertions explicites
 - toBePartiallyChecked
 - toHaveDescription
 
-🏋️‍♀️ Nous avons la materiel pour tester la vue, allons y
+> **🏋️‍♀️ Servez vous de ces nouveaux outils afin de passer sur l'exercice suivant (RTL exercice 2)**
+
+<img src="./images/jalon.jpg" style="zoom:33%;" />
 
 ## Tester les interactions : User Event
 
-UserEvent est un package de la librairie qui va faciliter l'interaction utilisateur. Elle est relativement simple et se base sur deux fonctions :
+UserEvent est un package de la librairie qui va faciliter l'interaction utilisateur. Elle est relativement simple et se base sur deux fonctions principales :
 
 - **type** : Pour simuler le clavier
 - **click** : Pour simuler la souris.
@@ -354,6 +466,10 @@ const button = screen.getByRole('button', { name: /Rechercher/ });
 await userEvent.type(input, 'gaearon');
 await userEvent.click(button);
 ```
+
+Il en existe d'autre moins courantes : https://github.com/testing-library/user-event#api
+
+> **🏋️‍♀️ Simulez le remplissage d'un champs avec cette nouvelle librairie (RTL exercice 3)**
 
 ## Tester les rendus asynchrones : waitFor
 
@@ -375,16 +491,20 @@ Les plus malins auront remarqué que les deux fonctions font la même chose. Mai
 
 > **The more your tests resemble the way your software is used, the more confidence they can give you.**
 
-🏋️‍♀️ Tester la récupération d'une requête avec UserEvent et le waitFor
+> **🏋️‍♀️ Tester la récupération d'une requête avec UserEvent et le waitFor (RTL Exercice 4)**
+
+<img src="./images/jalon.jpg" style="zoom:33%;" />
 
 # Pour aller plus loin : Partie 2
 
-Nous avons ici aborder les manière basqieu de tester son application, dans un dojo test avancés, je vous proposerai d'aborder les sujets suivants :
+Nous avons ici aborder les manière basique de tester son application, dans un dojo test avancés, je vous proposerai d'aborder les sujets suivants :
 
 - Automatiser et industrialiser les linter
+- Jest
+  - Fichier setupTest
 - React Testing Library Avancés :
   - Tester les providers
   - Tester les hooks
   - Tester le router
   - Tester Redux
-  - Mocker l'api avec MOck Service Worker
+  - Mocker l'api avec Mock Service Worker
